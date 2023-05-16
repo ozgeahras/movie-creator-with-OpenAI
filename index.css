@@ -27,8 +27,8 @@ body {
 }
 
 /* =================
-      Typography 
-     ================= */
+    Typography 
+   ================= */
 
 h1 {
   font-family: "Playfair Display SC", serif;
@@ -44,8 +44,8 @@ p {
 }
 
 /* =================
-      Sections 
-     ================= */
+    Sections 
+   ================= */
 
 header {
   background-color: var(--dark);
@@ -84,8 +84,8 @@ section {
 }
 
 /* =================
-      Setup 
-     ================= */
+    Setup 
+   ================= */
 
 .setup-inner {
   display: flex;
@@ -192,8 +192,8 @@ textarea::placeholder {
 }
 
 /* =================
-      Buttons & SVG 
-     ================= */
+    Buttons & SVG 
+   ================= */
 
 button {
   border: none;
@@ -235,11 +235,11 @@ img.loading {
 }
 
 /* =================
-      Output 
-     ================= */
+    Output 
+   ================= */
 
 .output-container {
-  display: none;
+  /* display: none; */
   flex-direction: column;
   margin: 1em auto;
   color: var(--dark);
@@ -253,8 +253,8 @@ img.loading {
 }
 
 /* =================
-      Footer 
-     ================= */
+    Footer 
+   ================= */
 
 footer {
   background-color: var(--dark);
