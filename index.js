@@ -17,6 +17,8 @@ document.getElementById("send-btn").addEventListener("click", () => {
     setupInputContainer.innerHTML = `<img src="images/loading.svg" class="loading" id="loading">`;
     movieBossText.innerText = `Ok, just wait a second while my digital brain digests that...`;
     fetchBotReply(userInput);
+    fetchSynopsis(userInput);
+    fetchTitle(userInput);
   }
 });
 
@@ -40,7 +42,6 @@ async function fetchBotReply(outline) {
     max_tokens: 60,
   });
   movieBossText.innerText = response.data.choices[0].text.trim();
-  console.log(response);
 }
 
 async function fetchSynopsis(outline) {
@@ -56,6 +57,21 @@ async function fetchSynopsis(outline) {
     `,
     max_tokens: 700,
   });
-  document.getElementById("output-text").innerText =
+  const synopsis = response.data.choices[0].text.trim();
+  document.getElementById("output-text").innerText = synopsis;
+  fetchTitle(synopsis);
+}
+
+async function fetchTitle(synopsis) {
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `Generate a catchy movie title for this synopsis: 
+    synopsis: ${synopsis}
+    title: 
+    `,
+    max_tokens: 25,
+    temperature: 0.7,
+  });
+  document.getElementById("output-title").innerText =
     response.data.choices[0].text.trim();
 }
