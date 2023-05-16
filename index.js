@@ -8,6 +8,7 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
 document.getElementById("send-btn").addEventListener("click", () => {
