@@ -1,4 +1,3 @@
-import { process } from "/env";
 import { Configuration, OpenAIApi } from "openai";
 
 const setupInputContainer = document.getElementById("setup-input-container");
