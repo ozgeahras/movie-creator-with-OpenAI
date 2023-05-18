@@ -4,6 +4,7 @@ const setupInputContainer = document.getElementById("setup-input-container");
 const movieBossText = document.getElementById("movie-boss-text");
 
 const configuration = new Configuration({
+  organization: "org-8sBBKnnzpa0m1QQdIgYJtvhS",
   apiKey: process.env.OPENAI_API_KEY,
 });
 delete configuration.baseOptions.headers["User-Agent"];
