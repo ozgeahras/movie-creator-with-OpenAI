@@ -54,7 +54,7 @@ npm run dev
 
 ## Screenshots
 
-![App Screenshot](https://github.com/ozgeahras/movie-creator-with-OpenAI/blob/master/src/assets/screenshot.png)
+![App Screenshot](https://github.com/ozgeahras/movie-creator-with-OpenAI/blob/master/public/screenshot.png)
 
 ## About Me
 
