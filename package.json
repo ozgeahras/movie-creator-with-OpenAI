@@ -1,6 +1,7 @@
 {
   "name": "project",
   "dependencies": {
+    "dotenv": "10.0.0",
     "openai": "3.2.1"
   },
   "devDependencies": {
