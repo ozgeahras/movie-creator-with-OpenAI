@@ -9,11 +9,6 @@ const configuration = new Configuration({
 delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
-console.log(
-  "VITE_MOVIE_APP_API_KEY -->",
-  import.meta.env.VITE_MOVIE_APP_API_KEY
-);
-
 const setupInputContainer = document.getElementById("setup-input-container");
 const movieBossText = document.getElementById("movie-boss-text");
 
@@ -123,7 +118,7 @@ async function fetchImagePromt(title, synopsis) {
 
 async function fetchImageUrl(imagePrompt) {
   const response = await openai.createImage({
-    prompt: `${imagePrompt} . There should be no text in this image.`,
+    prompt: `${imagePrompt}. There should be no text in this image.`,
     n: 1,
     size: "256x256",
     response_format: "b64_json",
