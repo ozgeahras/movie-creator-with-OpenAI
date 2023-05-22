@@ -10,7 +10,7 @@ delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
 console.log(
-  "process.env.MOVIE_APP_API_KEY -->",
+  "import.meta.env.VITE_MOVIE_APP_API_KEY -->",
   import.meta.env.VITE_MOVIE_APP_API_KEY
 );
 
