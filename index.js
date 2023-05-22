@@ -9,11 +9,6 @@ const configuration = new Configuration({
 delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
-console.log(
-  "process.env.MOVIE_APP_API_KEY -->",
-  import.meta.env.VITE_MOVIE_APP_API_KEY
-);
-
 const setupInputContainer = document.getElementById("setup-input-container");
 const movieBossText = document.getElementById("movie-boss-text");
 
