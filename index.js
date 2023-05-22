@@ -1,11 +1,17 @@
 import { Configuration, OpenAIApi } from "openai";
+import { process } from "./env.js";
+
+const apiKey = process.env.MOVIE_APP_API_KEY;
 
 const configuration = new Configuration({
   organization: "org-8sBBKnnzpa0m1QQdIgYJtvhS",
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: apiKey,
 });
 delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
+
+console.log("process.env.MOVIE_APP_API_KEY -->", process.env.MOVIE_APP_API_KEY);
+console.log("process.env.OPENAI_API_KEY -->", process.env.OPENAI_API_KEY);
 
 const setupInputContainer = document.getElementById("setup-input-container");
 const movieBossText = document.getElementById("movie-boss-text");
