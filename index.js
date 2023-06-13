@@ -64,11 +64,11 @@ async function fetchImagePrompt(title, synopsis) {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  fetchImageUrl(data.imagePrompt.trim());
+  fetchImagePrompt(data.imagePrompt.trim());
 }
 
-async function fetchImageUrl(imagePrompt) {
-  const response = await fetch("/.netlify/functions/fetchImageUrl", {
+async function fetchImagePrompt(imagePrompt) {
+  const response = await fetch("/.netlify/functions/fetchImagePrompt", {
     method: "POST",
     body: JSON.stringify({ imagePrompt }),
     headers: { "Content-Type": "application/json" },
