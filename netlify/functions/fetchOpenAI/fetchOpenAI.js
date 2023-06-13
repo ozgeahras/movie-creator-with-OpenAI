@@ -9,16 +9,17 @@ const configuration = new Configuration({
 delete configuration.baseOptions.headers["User-Agent"];
 const openai = new OpenAIApi(configuration);
 
-exports.handler = async (event, context) => {
+exports.handler = async (event) => {
   try {
     const { body } = event;
-    const { userInput } = JSON.parse(body);
+    const { outline } = JSON.parse(body);
 
-    const botReply = await fetchBotReply(userInput);
-    const synopsis = await fetchSynopsis(userInput);
+    const botReply = await fetchBotReply(outline);
+    const synopsis = await fetchSynopsis(outline);
     const title = await fetchTitle(synopsis);
     const stars = await fetchStars(synopsis);
-    const imageUrl = await fetchImagePrompt(title, synopsis);
+    const imagePrompt = await fetchImagePrompt(title, synopsis);
+    const imageUrl = await fetchImageUrl(imagePrompt);
 
     const response = {
       statusCode: 200,
@@ -118,60 +119,30 @@ async function fetchImagePrompt(title, synopsis) {
     image description: A silhouetted figure stands in the shadows of a 1920s speakeasy, her face turned away from the camera. In the background, two people are dancing in the dim light, one wearing a flapper-style dress and the other wearing a dapper suit. A semi-transparent image of war is super-imposed over the scene.
     ###
     title: zero Earth
-    synopsis: When bodyguard Kob (Daniel Radcliffe) is recruited by the United Nations to save planet Earth from the sinister Simm (John Malkovich), an alien lord with a plan to take over the world, he reluctantly accepts the challenge. With the help of his loyal sidekick, a brave and resourceful hamster named Gizmo (Gaten Matarazzo), Kob embarks on a perilous mission to destroy Simm. Along the way, he discovers a newfound courage and strength as he battles Simm's merciless forces. With the fate of the world in his hands, Kob must find a way to defeat the alien lord and save the planet.
-    image description: A tired and bloodied bodyguard and hamster standing atop a tall skyscraper, looking out over a vibrant cityscape, with a rainbow in the sky above them.
+    synopsis: When bodyguard Kob (Daniel Radcliffe) is recruited by the United Nations to save planet Earth from the sinister Simm (John Malkovich), an alien lord with a plan to take over the world, he reluctantly accepts the challenge. With the help of his loyal sidekick, a brave and resourceful hamster named Gizmo (Gaten Matarazzo), Kob embarks on a perilous mission to stop Simm and save humanity from destruction. Along the way, he encounters alien technology, battles henchmen, and discovers his own hidden powers.
+    image description: 
     ###
     title: ${title}
     synopsis: ${synopsis}
     image description: 
     `,
-    temperature: 0.8,
     max_tokens: 100,
   });
   return response.data.choices[0].text.trim();
 }
 
 async function fetchImageUrl(imagePrompt) {
-  const response = await openai.createImage({
-    prompt: `${imagePrompt}. There should be no text in this image.`,
-    n: 1,
-    size: "256x256",
-    response_format: "b64_json",
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `Suggest a URL to an image that matches the given description.
+    ###
+    image description: A silhouetted figure stands in the shadows of a 1920s speakeasy, her face turned away from the camera. In the background, two people are dancing in the dim light, one wearing a flapper-style dress and the other wearing a dapper suit. A semi-transparent image of war is super-imposed over the scene.
+    url: https://www.example.com/images/1920s_speakeasy.jpg
+    ###
+    image description: ${imagePrompt}
+    url: 
+    `,
+    max_tokens: 20,
   });
-
-  return response.data.data[0].b64_json;
+  return response.data.choices[0].text.trim();
 }
-
-exports.handler = async (event) => {
-  const apiKey = process.env.VITE_MOVIE_APP_API_KEY;
-
-  const configuration = new Configuration({
-    organization: "org-8sBBKnnzpa0m1QQdIgYJtvhS",
-    apiKey: apiKey,
-  });
-  delete configuration.baseOptions.headers["User-Agent"];
-  const openai = new OpenAIApi(configuration);
-
-  const body = JSON.parse(event.body);
-  const outline = body.outline;
-
-  const botReply = await fetchBotReply(outline);
-  const synopsis = await fetchSynopsis(outline);
-  const title = await fetchTitle(synopsis);
-  const stars = await fetchStars(synopsis);
-  const imagePrompt = await fetchImagePrompt(title, synopsis);
-  const imageUrl = await fetchImageUrl(imagePrompt);
-
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      botReply: botReply,
-      synopsis: synopsis,
-      title: title,
-      stars: stars,
-      imageUrl: imageUrl,
-    }),
-  };
-
-  return response;
-};
