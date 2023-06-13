@@ -78,3 +78,19 @@ async function fetchImagePrompt(imagePrompt) {
     movieBossText.innerText = `This idea is so good I'm jealous! It's gonna make you rich for sure! Remember, I want 10% 💰`;
   });
 }
+
+async function fetchImageUrl(imagePrompt) {
+  const response = await fetch("/.netlify/functions/fetchImageUrl", {
+    method: "POST",
+    body: JSON.stringify({ imagePrompt }),
+  });
+  const { imageUrl } = await response.json();
+
+  const imgElement = document.createElement("img");
+  imgElement.src = imageUrl;
+  document.getElementById("output-img-container").appendChild(imgElement);
+
+  document.getElementById("setup-container").style.display = "none";
+  document.getElementById("output-container").style.display = "flex";
+  movieBossText.innerText = `This idea is so good I'm jealous! It's gonna make you rich for sure! Remember, I want 10% 💰`;
+}
