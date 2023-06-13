@@ -1,3 +1,17 @@
+const setupInputContainer = document.getElementById("setup-input-container");
+const movieBossText = document.getElementById("movie-boss-text");
+
+document.getElementById("send-btn").addEventListener("click", () => {
+  const setupTextarea = document.getElementById("setup-textarea");
+  if (setupTextarea.value) {
+    const userInput = setupTextarea.value;
+    setupInputContainer.innerHTML = `<img src="/loading.svg" class="loading" id="loading">`;
+    movieBossText.innerText = `Ok, just wait a second while my digital brain digests that...`;
+    fetchBotReply(userInput);
+    fetchSynopsis(userInput);
+  }
+});
+
 async function fetchBotReply(outline) {
   const response = await fetch("/.netlify/functions/fetchOpenAi", {
     method: "POST",
@@ -55,5 +69,13 @@ async function fetchImageUrl(imagePrompt) {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.imageUrl;
+  document.getElementById(
+    "output-img-container"
+  ).innerHTML = `<img src="${data.imageUrl}">`;
+  setupInputContainer.innerHTML = `<button id="view-pitch-btn" class="view-pitch-btn">View Pitch</button>`;
+  document.getElementById("view-pitch-btn").addEventListener("click", () => {
+    document.getElementById("setup-container").style.display = "none";
+    document.getElementById("output-container").style.display = "flex";
+    movieBossText.innerText = `This idea is so good I'm jealous! It's gonna make you rich for sure! Remember, I want 10% 💰`;
+  });
 }
