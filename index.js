@@ -46,7 +46,7 @@ async function fetchTitle(synopsis) {
   const data = await response.json();
   const title = data.title.trim();
   document.getElementById("output-title").innerText = title;
-  fetchImagePrompt(title, synopsis);
+  fetchImagePrompt(synopsis);
 }
 
 async function fetchStars(synopsis) {
