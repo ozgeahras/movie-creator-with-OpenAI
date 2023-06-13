@@ -65,7 +65,7 @@ async function fetchImageUrl(imagePrompt) {
     body: JSON.stringify({ imagePrompt }),
   });
   const { imageUrl } = await response.json();
-
+  console.log("image url ", imageUrl);
   const imgElement = document.createElement("img");
   imgElement.src = imageUrl;
   document.getElementById("output-img-container").appendChild(imgElement);
