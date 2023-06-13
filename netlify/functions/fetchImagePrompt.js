@@ -45,5 +45,6 @@ async function fetchImagePrompt(synopsis) {
     `,
     max_tokens: 100,
   });
+  console.log("fetchImagePrompt ici response: ", response);
   return response.data.choices[0].text.trim();
 }

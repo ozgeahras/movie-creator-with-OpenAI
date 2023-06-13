@@ -66,7 +66,7 @@ async function fetchImagePrompt(imagePrompt) {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  console.log(data);
+  console.log("index.js ici data: ", data);
   document.getElementById(
     "output-img-container"
   ).innerHTML = `<img src="${data.imageUrl}">`;
