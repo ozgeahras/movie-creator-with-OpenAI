@@ -29,7 +29,9 @@ async function fetchSynopsis(outline) {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
+  console.log(data);
   const synopsis = data.synopsis.trim();
+
   document.getElementById("output-text").innerText = synopsis;
   fetchTitle(synopsis);
   fetchStars(synopsis);
