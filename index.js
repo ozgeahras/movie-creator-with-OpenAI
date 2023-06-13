@@ -13,57 +13,62 @@ document.getElementById("send-btn").addEventListener("click", () => {
 });
 
 async function fetchBotReply(outline) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchBotReply", {
     method: "POST",
     body: JSON.stringify({ outline }),
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.botReply;
+  movieBossText.innerText = data.botReply.trim();
 }
 
 async function fetchSynopsis(outline) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchSynopsis", {
     method: "POST",
     body: JSON.stringify({ outline }),
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.synopsis;
+  const synopsis = data.synopsis.trim();
+  document.getElementById("output-text").innerText = synopsis;
+  fetchTitle(synopsis);
+  fetchStars(synopsis);
 }
 
 async function fetchTitle(synopsis) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchTitle", {
     method: "POST",
     body: JSON.stringify({ synopsis }),
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.title;
+  const title = data.title.trim();
+  document.getElementById("output-title").innerText = title;
+  fetchImagePrompt(title, synopsis);
 }
 
 async function fetchStars(synopsis) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchStars", {
     method: "POST",
     body: JSON.stringify({ synopsis }),
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.stars;
+  document.getElementById("output-stars").innerText = data.stars.trim();
 }
 
 async function fetchImagePrompt(title, synopsis) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchImagePrompt", {
     method: "POST",
     body: JSON.stringify({ title, synopsis }),
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
-  return data.imagePrompt;
+  fetchImageUrl(data.imagePrompt.trim());
 }
 
 async function fetchImageUrl(imagePrompt) {
-  const response = await fetch("/.netlify/functions/fetchOpenAi", {
+  const response = await fetch("/.netlify/functions/fetchImageUrl", {
     method: "POST",
     body: JSON.stringify({ imagePrompt }),
     headers: { "Content-Type": "application/json" },
