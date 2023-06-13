@@ -46,7 +46,7 @@ async function fetchTitle(synopsis) {
   const data = await response.json();
   const title = data.title.trim();
   document.getElementById("output-title").innerText = title;
-  fetchImageUrl(synopsis);
+  fetchImageUrl(title);
 }
 
 async function fetchStars(synopsis) {
