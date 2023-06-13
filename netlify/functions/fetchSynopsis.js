@@ -40,5 +40,5 @@ async function fetchSynopsis(outline) {
     `,
     max_tokens: 700,
   });
-  return response.data.choices[0].text.trim();
+  return response.data.choices[0].text;
 }
