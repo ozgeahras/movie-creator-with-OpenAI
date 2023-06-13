@@ -46,7 +46,7 @@ async function fetchTitle(synopsis) {
   const data = await response.json();
   const title = data.title.trim();
   document.getElementById("output-title").innerText = title;
-  fetchImagePrompt(synopsis);
+  fetchImageUrl(synopsis);
 }
 
 async function fetchStars(synopsis) {
@@ -57,26 +57,6 @@ async function fetchStars(synopsis) {
   });
   const data = await response.json();
   document.getElementById("output-stars").innerText = data.stars.trim();
-}
-
-async function fetchImagePrompt(imagePrompt) {
-  const response = await fetch("/.netlify/functions/fetchImagePrompt", {
-    method: "POST",
-    body: JSON.stringify({ imagePrompt }),
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await response.json();
-  console.log("index.js ici data: ", data);
-  document.getElementById(
-    "output-img-container"
-  ).innerHTML = `<img src="${data.imageUrl}">`;
-
-  setupInputContainer.innerHTML = `<button id="view-pitch-btn" class="view-pitch-btn">View Pitch</button>`;
-  document.getElementById("view-pitch-btn").addEventListener("click", () => {
-    document.getElementById("setup-container").style.display = "none";
-    document.getElementById("output-container").style.display = "flex";
-    movieBossText.innerText = `This idea is so good I'm jealous! It's gonna make you rich for sure! Remember, I want 10% 💰`;
-  });
 }
 
 async function fetchImageUrl(imagePrompt) {
