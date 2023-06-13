@@ -57,16 +57,6 @@ async function fetchStars(synopsis) {
   document.getElementById("output-stars").innerText = data.stars.trim();
 }
 
-async function fetchImagePrompt(title, synopsis) {
-  const response = await fetch("/.netlify/functions/fetchImagePrompt", {
-    method: "POST",
-    body: JSON.stringify({ title, synopsis }),
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await response.json();
-  fetchImagePrompt(data.imagePrompt.trim());
-}
-
 async function fetchImagePrompt(imagePrompt) {
   const response = await fetch("/.netlify/functions/fetchImagePrompt", {
     method: "POST",
