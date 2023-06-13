@@ -66,9 +66,11 @@ async function fetchImagePrompt(imagePrompt) {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
+  console.log(data);
   document.getElementById(
     "output-img-container"
   ).innerHTML = `<img src="${data.imageUrl}">`;
+
   setupInputContainer.innerHTML = `<button id="view-pitch-btn" class="view-pitch-btn">View Pitch</button>`;
   document.getElementById("view-pitch-btn").addEventListener("click", () => {
     document.getElementById("setup-container").style.display = "none";
